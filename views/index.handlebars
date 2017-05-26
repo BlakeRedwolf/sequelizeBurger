@@ -1,0 +1,46 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 text-center">Burger Logger!</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<form method="POST" action="/">
+			<div class="form-group">
+				<div class="input-group col-md-8">
+					<input class="form-control" type="text" placeholder="Enter a burger!" name="burgerInput">
+					<button class="btn btn-default" type="submit">Submit</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 text-center">
+			<h2 class="text-center">Burgers:</h2>
+			<div class="panel panel-success">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								{{#each burgers}}
+								{{#unless this.devoured}}
+								<tr>
+									<td>{{this.id}}</td>
+									<td>{{this.burger_name}}</td>
+									<td>
+										<form>
+											<input type="hidden" name="devoured" value="true">
+											<button class="btn btn-default btn-lg" tpye="submit">Eat Da Burger</button>
+										</form>
+									</td>
+								</tr>
+								{{/unless}}
+								{{/each}}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
