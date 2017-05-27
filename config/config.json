@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "root",
+    "password": "F0ll0wthewhiterabbit",
+    "database": "sequelizeBurger",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "F0ll0wthewhiterabbit",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

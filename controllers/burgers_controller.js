@@ -1,40 +1,34 @@
 var express = require("express");
 var router = express.Router();
-var burger = require("../models/burger.js");
+var db = require("../models");
 
 router.get("/", function(req, res) {
-	burger.all(function(data) {
-		var hbsObject = {
-			burgers: data
-		};
-		console.log(hbsObject);
-		res.render("index", hbsObject);
-	});
+  db.burger.findAll({}).then(function(results) {
+    var handlebarsObject = {
+      burgers: results
+    };
+    res.render("index", handlebarsObject);
+  });
 });
 
-// When user inputs a value, post to db
 router.post("/", function(req, res) {
-	burger.create([
-		"name", "sleepy"
-	], [
-		req.body.name, req.body.sleepy
-	], function() {
-		res.redirect("/");
-	});
+  db.burger.create({
+    burger_name: req.body.burgerInput,
+  }).then(function(data) {
+    res.redirect("/");
+  });
 });
 
-// When user inputs update devoured in db (id)
 router.put("/:id", function(req, res) {
-	var condition = "id = " + req.params.id;
-
-	console.log("condition", condition);
-
-	burger.update({
-		sleepy: req.body.devoured
-	}, condition, function() {
-		res.redirect("/");
-	});
+  db.burger.update({
+    devoured: req.body.devoured
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(function(data) {
+    res.redirect("/");
+  });
 });
 
-// Export routes for access
 module.exports = router;

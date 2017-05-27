@@ -1,25 +1,27 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
-// Require routes
-var routes = require("./controllers/burger_controller.js");
+var exphbs = require("express-handlebars");
 
-var port = 3000;
-
+var routes = require("./controllers/burgers_controller.js");
+var db = require("./models");
+var port = process.env.port || 8080;
 var app = express();
-// Static content will come from /public
-app.use(express.static(process.cwd() + "/public"));
+
+app.use(express.static(__dirname + "/public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-// Override 
 app.use(methodOverride("_method"));
 
-var exphbs = require("express-handlebars");
-// Handlebars
-app.engine("handlebars", exphbs({ defaultLayout: "main"}));
-
-var routes = require("./controller/burger_controller.js");
+app.engine("handlebars", exphbs({ 
+  defaultLayout: "main"
+}));
+app.set("view engine", "handlebars");
 
 app.use("/", routes);
 
-app.listen(port);
+db.sequelize.sync({ force: false }).then(function() {
+  app.listen(port, function() {
+    console.log("App listening on port " + port);
+  });
+});

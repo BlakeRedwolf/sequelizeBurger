@@ -1,25 +1,19 @@
-var orm = require("../config/orm.js");
+var Sequelize = require("sequelize");
 
-var burger = {
-	// Select all from sql db
-	selectAll: function(callBack) {
-		orm.selectAll("burgers", function(res) {
-			callBack(res);
-		});
+module.exports = function(sequelize, DataTypes) {
+var Burger = sequelize.define("burger", {
+	id: {
+		type: Sequelize.INTEGER,
+		autoIncrement: true,
+		primaryKey: true
 	},
-	// Insert
-	insertTab: function(value, callBack) {
-		orm.insertTab("burgers", vaule, function(res) {
-			callBack(res);
-		});
+	burger_name: {
+		type: Sequelize.STRING
 	},
-	// Update
-	updateTab: function(column, condition, callBack) {
-		orm.updateTab("burgers", column, condition, function(res) {
-			callBack(res);
-		});
+	devoured: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: false
 	}
+});
+	return Burger;
 };
-
-// Export for controller
-module.exports = burger;
